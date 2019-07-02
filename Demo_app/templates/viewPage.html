@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="refresh" content="5" charset="UTF-8">
+    <script type="text/javascript" src="reloader.js"></script>
+    <title>Create </title>
+     {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+</head>
+<body>
+
+  <form method="POST" class="post-form" action="/create">
+          {% csrf_token %}
+      <div class="container">
+  <br>
+      <div class="form-group row">
+      <label class="col-sm-1 col-form-label"></label>
+      <div class="col-sm-4">
+
+      </div>
+
+    </div>
+    <div class="form-group row">
+
+      <div class="col-sm-4">
+        <label class="col-sm-2 col-form-label"><b>Create: </b></label> {{ form.name }}
+         <button id='refresh' onSubmit="window.location.reload(true)" type="submit" class="btn btn-primary">Submit</button>
+      </div>
+
+    </div>
+  </div>
+  </form>
+<table class="table table-striped table-bordered table-sm">
+    <thead class="thead-dark">
+    <tr>
+        <th>id</th>
+        <th>Name</th>
+        <th>Completed?</th>
+        <th>Action</th>
+
+    </tr>
+    </thead>
+    <tbody>
+{% for created in create %}
+    <tr>
+        <td>{{ created.id }}</td>
+        <td>{{ created.name }}</td>
+        <td>{{ created.completed }}</td>
+        <td>
+             <a href="/edit/{{ created.id }}">< Edit > <span>&#124;</span> < Mark {% if created.completed == "No" %} Pending {% else %} Done {% endif %}></a>
+        </td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+<br>
+<br>
+<script>
+document.getElementById("refresh").onsubmit = function(){
+    location.reload(true);
+}
+</script>
+
+</body>
+</html>
